@@ -1,0 +1,30 @@
+# Dependencias para la API REST con Flask
+# =====================================
+
+# Framework principal
+Flask==3.0.0
+# Flask es el framework web minimalista para Python
+# Incluye servidor de desarrollo, routing, templates, etc.
+
+# Dependencias que Flask instala automáticamente:
+# - Werkzeug: servidor WSGI y utilidades
+# - Jinja2: motor de plantillas
+# - MarkupSafe: escape seguro de HTML
+# - itsdangerous: firmas criptográficas seguras
+# - click: interfaz de línea de comandos
+
+# Dependencias opcionales útiles para APIs REST:
+# Flask-CORS==4.0.0
+# Para habilitar CORS si necesitas llamadas desde navegadores
+
+# Flask-SQLAlchemy==3.1.1  
+# Para integración con bases de datos
+
+# Flask-Migrate==4.0.5
+# Para migraciones de base de datos
+
+# marshmallow==3.20.1
+# Para serialización/deserialización y validación de datos
+
+# python-dotenv==1.0.0
+# Para cargar variables de entorno desde archivo .env
