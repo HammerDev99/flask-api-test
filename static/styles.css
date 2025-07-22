@@ -1,0 +1,603 @@
+/*
+===============================================================================
+ESTILOS CSS EDUCATIVOS - GESTOR DE TAREAS
+===============================================================================
+
+Este archivo demuestra conceptos fundamentales de CSS moderno:
+1. Variables CSS (custom properties) para mantenimiento
+2. Flexbox y Grid para layouts responsivos
+3. Animaciones y transiciones
+4. Estados de hover e interacción
+5. Diseño mobile-first
+6. Metodología de organización de código
+
+ESTRUCTURA:
+- Variables globales
+- Reset y base styles
+- Layouts principales
+- Componentes específicos
+- Estados y animaciones
+- Responsive design
+*/
+
+/* 
+=============================================================================
+VARIABLES CSS (Custom Properties)
+=============================================================================
+Las variables CSS nos permiten centralizar valores y facilitar el mantenimiento.
+Pueden ser modificadas dinámicamente con JavaScript si es necesario.
+*/
+:root {
+  /* Colores principales */
+  --primary-color: #3b82f6;      /* Azul principal */
+  --primary-dark: #2563eb;       /* Azul más oscuro para hover */
+  --secondary-color: #6b7280;    /* Gris para elementos secundarios */
+  --success-color: #10b981;      /* Verde para estados exitosos */
+  --warning-color: #f59e0b;      /* Amarillo para advertencias */
+  --danger-color: #ef4444;       /* Rojo para errores/eliminar */
+  
+  /* Colores de fondo */
+  --bg-primary: #ffffff;         /* Fondo principal */
+  --bg-secondary: #f8fafc;       /* Fondo secundario */
+  --bg-card: #ffffff;            /* Fondo de tarjetas */
+  --bg-hover: #f1f5f9;           /* Fondo en hover */
+  
+  /* Colores de texto */
+  --text-primary: #1f2937;       /* Texto principal */
+  --text-secondary: #6b7280;     /* Texto secundario */
+  --text-muted: #9ca3af;         /* Texto deshabilitado */
+  
+  /* Bordes */
+  --border-color: #e5e7eb;       /* Color de bordes */
+  --border-radius: 8px;          /* Radio de bordes estándar */
+  --border-radius-lg: 12px;      /* Radio de bordes grande */
+  
+  /* Espaciados */
+  --spacing-xs: 0.25rem;         /* 4px */
+  --spacing-sm: 0.5rem;          /* 8px */
+  --spacing-md: 1rem;            /* 16px */
+  --spacing-lg: 1.5rem;          /* 24px */
+  --spacing-xl: 2rem;            /* 32px */
+  --spacing-2xl: 3rem;           /* 48px */
+  
+  /* Tipografía */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-sm: 0.875rem;      /* 14px */
+  --font-size-base: 1rem;        /* 16px */
+  --font-size-lg: 1.125rem;      /* 18px */
+  --font-size-xl: 1.25rem;       /* 20px */
+  --font-size-2xl: 1.5rem;       /* 24px */
+  --font-size-3xl: 2rem;         /* 32px */
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* Transiciones */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+}
+
+/* 
+=============================================================================
+RESET Y ESTILOS BASE
+=============================================================================
+Normalizamos los estilos del navegador y establecemos bases consistentes
+*/
+
+/* Box-sizing universal: incluye padding y border en el ancho total */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Reset de márgenes y paddings */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilos base del documento */
+html {
+  font-size: 16px; /* Base para rem calculations */
+  line-height: 1.5;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 
+=============================================================================
+LAYOUTS PRINCIPALES
+=============================================================================
+Estructura general de la página usando Flexbox
+*/
+
+/* Container principal - centra el contenido y limita el ancho */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Header principal */
+.header {
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--spacing-xl) 0;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  text-align: center;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  text-align: center;
+  font-size: var(--font-size-lg);
+}
+
+/* Área principal de contenido */
+.main {
+  min-height: calc(100vh - 200px); /* Ajuste para footer */
+}
+
+/* Footer */
+.footer {
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  padding: var(--spacing-xl) 0;
+  margin-top: var(--spacing-2xl);
+}
+
+/* 
+=============================================================================
+COMPONENTES DE FORMULARIO
+=============================================================================
+Estilos para inputs, labels, botones y validación
+*/
+
+.task-form-section {
+  background-color: var(--bg-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.task-form-section h2 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-lg);
+  color: var(--text-primary);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+}
+
+/* Estilos para inputs y textarea */
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  background-color: var(--bg-primary);
+}
+
+/* Estados de focus para accesibilidad */
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Estados de validación */
+.form-group input:invalid:not(:placeholder-shown) {
+  border-color: var(--danger-color);
+}
+
+.form-group input:valid:not(:placeholder-shown) {
+  border-color: var(--success-color);
+}
+
+/* 
+=============================================================================
+SISTEMA DE BOTONES
+=============================================================================
+Botones reutilizables con diferentes variantes y estados
+*/
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 44px; /* Tamaño mínimo para accesibilidad táctil */
+  font-family: var(--font-family);
+}
+
+/* Variantes de botones */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-success {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #dc2626;
+}
+
+/* Estados de botón */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Botones pequeños */
+.btn-sm {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  min-height: 36px;
+}
+
+/* 
+=============================================================================
+SECCIÓN DE TAREAS
+=============================================================================
+Lista de tareas, estados y tarjetas individuales
+*/
+
+.tasks-section {
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.tasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xl);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+}
+
+.tasks-header h2 {
+  font-size: var(--font-size-2xl);
+  margin: 0;
+}
+
+/* Estados de carga y vacío */
+.loading-state,
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--text-secondary);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto var(--spacing-md);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+/* Contenedor de tareas */
+.tasks-container {
+  padding: var(--spacing-md);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* Tarjeta individual de tarea */
+.task-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.task-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.task-card.completed {
+  opacity: 0.7;
+  background-color: var(--bg-hover);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.task-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  flex: 1;
+  margin-right: var(--spacing-md);
+}
+
+.task-card.completed .task-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.task-description {
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.5;
+}
+
+.task-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.task-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+/* 
+=============================================================================
+SECCIÓN DE ESTADÍSTICAS
+=============================================================================
+Grid de estadísticas con tarjetas informativas
+*/
+
+.stats-section {
+  background-color: var(--bg-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.stats-section h3 {
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.stat-card {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  text-align: center;
+  border: 1px solid var(--border-color);
+  transition: transform var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-number {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* 
+=============================================================================
+SECCIÓN DE FOOTER
+=============================================================================
+Información técnica y educativa
+*/
+
+.tech-info h4 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.tech-item {
+  background-color: var(--bg-hover);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  border: 1px solid var(--border-color);
+}
+
+.footer-note {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* 
+=============================================================================
+RESPONSIVE DESIGN
+=============================================================================
+Adaptaciones para diferentes tamaños de pantalla
+*/
+
+/* Tablet y móvil */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .header {
+    padding: var(--spacing-lg) 0;
+  }
+  
+  .header h1 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .tasks-header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    text-align: center;
+  }
+  
+  .task-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .task-actions {
+    margin-top: var(--spacing-sm);
+  }
+  
+  .tech-stack {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+/* Móvil pequeño */
+@media (max-width: 480px) {
+  .task-form-section,
+  .tasks-section,
+  .stats-section {
+    padding: var(--spacing-lg);
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .task-actions .btn {
+    width: auto;
+    flex: 1;
+  }
+}
+
+/* 
+=============================================================================
+UTILIDADES Y CLASES AUXILIARES
+=============================================================================
+Clases helper para casos específicos
+*/
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.hidden { display: none !important; }
+.visible { display: block !important; }
+
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

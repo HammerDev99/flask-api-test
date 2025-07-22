@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Tareas - Frontend Tutorial</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <!-- 
+        ESTRUCTURA HTML EDUCATIVA
+        =========================
+        Esta página demuestra cómo crear una interfaz web que consume una API REST.
+        
+        Componentes principales:
+        1. Header: Título y descripción de la aplicación
+        2. Form: Formulario para crear nuevas tareas
+        3. Tasks Container: Lista dinámica de tareas
+        4. Footer: Información sobre la tecnología utilizada
+        
+        Conceptos clave:
+        - Semántica HTML5: uso de elementos apropiados (header, main, section, etc.)
+        - Accesibilidad: labels, alt texts, roles ARIA donde sea necesario
+        - Estructura modular: cada sección tiene su propósito específico
+    -->
+    
+    <header class="header">
+        <div class="container">
+            <h1>📝 Gestor de Tareas</h1>
+            <p class="subtitle">Frontend educativo conectado a API REST Flask</p>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            
+            <!-- SECCIÓN: FORMULARIO DE NUEVA TAREA -->
+            <!-- 
+                Este formulario demuestra:
+                - Captura de datos del usuario
+                - Validación básica HTML5
+                - Prevención de envío tradicional del formulario
+                - Uso de JavaScript para manejo de eventos
+            -->
+            <section class="task-form-section">
+                <h2>➕ Crear Nueva Tarea</h2>
+                <form id="taskForm" class="task-form">
+                    <div class="form-group">
+                        <label for="taskTitle">Título de la tarea *</label>
+                        <input 
+                            type="text" 
+                            id="taskTitle" 
+                            name="title" 
+                            required 
+                            placeholder="Ej: Completar tutorial de Flask"
+                            maxlength="100"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="taskDescription">Descripción (opcional)</label>
+                        <textarea 
+                            id="taskDescription" 
+                            name="description" 
+                            rows="3"
+                            placeholder="Detalles adicionales sobre la tarea..."
+                            maxlength="500"
+                        ></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        <span class="btn-text">Crear Tarea</span>
+                        <span class="btn-loading" style="display: none;">Creando...</span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- SECCIÓN: LISTA DE TAREAS -->
+            <!-- 
+                Esta sección demuestra:
+                - Renderizado dinámico de contenido
+                - Estados de la aplicación (cargando, vacío, con datos)
+                - Interacción con elementos generados dinámicamente
+                - Actualización del DOM sin recargar la página
+            -->
+            <section class="tasks-section">
+                <div class="tasks-header">
+                    <h2>📋 Mis Tareas</h2>
+                    <button id="refreshBtn" class="btn btn-secondary">
+                        🔄 Actualizar
+                    </button>
+                </div>
+                
+                <!-- Estado de carga -->
+                <div id="loadingState" class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Cargando tareas...</p>
+                </div>
+                
+                <!-- Estado vacío (sin tareas) -->
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div class="empty-icon">📝</div>
+                    <h3>¡No tienes tareas aún!</h3>
+                    <p>Crea tu primera tarea usando el formulario de arriba.</p>
+                </div>
+                
+                <!-- Contenedor de tareas -->
+                <div id="tasksContainer" class="tasks-container" style="display: none;">
+                    <!-- Las tareas se generarán dinámicamente aquí -->
+                </div>
+            </section>
+
+            <!-- SECCIÓN: ESTADÍSTICAS -->
+            <!-- 
+                Demuestra cálculo dinámico de datos y actualización de UI
+            -->
+            <section class="stats-section">
+                <h3>📊 Estadísticas</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalTasks">0</div>
+                        <div class="stat-label">Total de Tareas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completedTasks">0</div>
+                        <div class="stat-label">Completadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pendingTasks">0</div>
+                        <div class="stat-label">Pendientes</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="tech-info">
+                <h4>🛠️ Tecnologías Utilizadas</h4>
+                <div class="tech-stack">
+                    <span class="tech-item">Backend: Flask + Python</span>
+                    <span class="tech-item">Frontend: HTML5 + CSS3 + JavaScript Vanilla</span>
+                    <span class="tech-item">API: REST con JSON</span>
+                    <span class="tech-item">Comunicación: Fetch API</span>
+                </div>
+            </div>
+            <p class="footer-note">
+                💡 Este proyecto es educativo y demuestra la comunicación entre frontend y backend
+            </p>
+        </div>
+    </footer>
+
+    <!-- 
+        CARGA DE SCRIPTS
+        ================
+        Los scripts se cargan al final del body para asegurar que el DOM 
+        esté completamente cargado antes de ejecutar JavaScript
+    -->
+    <script src="/static/app.js"></script>
+</body>
+</html>

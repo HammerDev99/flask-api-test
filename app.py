@@ -11,13 +11,16 @@ Fecha: 2025
 """
 
 # Importaciones necesarias
-from flask import Flask, request, jsonify  # Flask framework y utilidades
+from flask import Flask, request, jsonify, send_from_directory  # Flask framework y utilidades
 from datetime import datetime  # Para manejar fechas
+import os  # Para manejar rutas de archivos
 
 # Inicialización de la aplicación Flask
 # Flask(__name__) crea una instancia de la aplicación
 # __name__ le dice a Flask dónde encontrar recursos como templates
-app = Flask(__name__)
+# static_folder especifica dónde están los archivos estáticos (CSS, JS, HTML)
+# static_url_path define la ruta URL base para archivos estáticos
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 # =============================================================================
 # ALMACÉN DE DATOS EN MEMORIA
@@ -53,10 +56,29 @@ next_id = 3
 @app.route('/')
 def home():
     """
-    Endpoint raíz - Información general de la API
+    Endpoint raíz - Sirve la aplicación frontend
     
     Método HTTP: GET
     Ruta: /
+    
+    ¿Qué hace?
+    - Sirve el archivo HTML principal de la aplicación frontend
+    - Permite que la aplicación web funcione desde la misma dirección
+    - Integra frontend y backend en una sola aplicación
+    
+    Retorna:
+    - Archivo HTML de la aplicación frontend
+    - Status code: 200 (OK)
+    """
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/api/')
+def api_info():
+    """
+    Endpoint de información de la API
+    
+    Método HTTP: GET
+    Ruta: /api/
     
     ¿Qué hace?
     - Proporciona información básica sobre la API
@@ -70,8 +92,9 @@ def home():
     return jsonify({
         'message': 'API REST con Flask - Gestión de Tareas',
         'version': '1.0',
+        'frontend_url': '/',
         'endpoints': {
-            'GET /': 'Información de la API',
+            'GET /api/': 'Información de la API',
             'GET /tasks': 'Obtener todas las tareas',
             'GET /tasks/<id>': 'Obtener una tarea específica',
             'POST /tasks': 'Crear nueva tarea',
